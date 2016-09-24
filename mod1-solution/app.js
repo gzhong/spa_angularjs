@@ -4,8 +4,10 @@
     $sc.lunchMenu = '';
     $sc.msg = '';
     $sc.checkTooMuch = function(){
+      $sc.msgMode = 'normal';
       if($sc.lunchMenu.length==0){
         $sc.msg = 'Please enter something';
+        $sc.msgMode = 'warning';
         return;
       }
       var items = $sc.lunchMenu.split(',');
