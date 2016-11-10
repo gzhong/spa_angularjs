@@ -21,7 +21,9 @@
 
     <!-- found-items should be implemented as a component -->
     <div>
-    <found-items found-items="nid.found" on-remove="nid.removeItem(itemIndex)"></found-items>
+    <found-items found-items="nid.found" on-remove="nid.removeItem(itemIndex)">
+        <span class="error">!!!{{nid.errorMsg}}!!!</span>
+    </found-items>
     </div
   </div>
 

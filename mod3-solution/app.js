@@ -3,6 +3,10 @@
     var NarrowItDownController = function(mss){
         var ctrl = this;
         ctrl.getData = function(){
+            if(!ctrl.searchTerm){
+                ctrl.errorMsg = 'Enter something';
+                return;
+            }
             var promise = mss.getMatchedMenuItems(ctrl.searchTerm);
             promise.then(function(result){
                 var fis = [];
@@ -12,6 +16,7 @@
                         fis.push(mi);
                     }
                 }
+                ctrl.errorMsg = fis.length===0 ? 'No result' : '';
                 ctrl.found = fis;
             });
         };
@@ -41,14 +46,32 @@
             },
             controller: FoundItemsDirectiveController,
             controllerAs: 'ctrl',
-            bindToController: true
+            bindToController: true,
+            link: FoundItemsDirectiveLink,
+            transclude: true
         };
 
         return ddo;
     };
 
+    var FoundItemsDirectiveLink = function(scope, element, attrs, controller) {
+        scope.$watch('ctrl.hasResults()', function (newValue, oldValue) {
+            var warningElem = element.find("div.error");
+            if (newValue === true) {
+                warningElem.css('display', 'block');
+            }
+            else {
+                warningElem.css('display', 'none');
+            }
+
+        });
+    };
+
     var FoundItemsDirectiveController = function(){
         var ctrl = this;
+        ctrl.hasResults = function(){
+            return ctrl.items && ctrl.items.length>0;
+        }
     };
 
     angular.module('NarrowItDownApp',[])
