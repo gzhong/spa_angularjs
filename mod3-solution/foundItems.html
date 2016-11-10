@@ -1,0 +1,9 @@
+<h2>Found {{ctrl.items.length}}</h2>
+<div>
+<ul>
+  <li ng-repeat="item in ctrl.items">
+    {{ item.shortName }} ({{ item.name }})
+    <button ng-click="ctrl.onRemove({itemIndex: $index});">Remove Item</button>
+  </li>
+</ul>
+</div>
